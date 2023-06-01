@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <WarningsAsErrors>FS0025</WarningsAsErrors>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <TargetFramework>net7.0-windows10.0.17763.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="paket.references" />
+    <Compile Include="Program.fs" />
+    <Content Include="icon.png" />
+    <Content Include="icon.ico" />
+  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>
