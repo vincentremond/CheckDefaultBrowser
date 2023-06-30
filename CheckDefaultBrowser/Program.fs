@@ -32,10 +32,10 @@ module Program =
             .Show()
 
     let check () =
-        let protocols =
-            [
-              // "http", "AppX5jyrnn5t4f5fc4fmtzbtfx9k7egk6j2k"
-              "https", "AppXx6s9gr5xzdkn58z6csv0r47y3ygytcx0" ]
+        let protocols = [
+            // "http", "AppX5jyrnn5t4f5fc4fmtzbtfx9k7egk6j2k"
+            "https", "AppXx6s9gr5xzdkn58z6csv0r47y3ygytcx0"
+        ]
 
         for protocol, expectedProgId in protocols do
             let subKey =
