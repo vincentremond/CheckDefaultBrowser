@@ -1,6 +1,7 @@
 ﻿namespace CheckDefaultBrowser
 
 open System
+open System.Diagnostics
 open System.Drawing
 open System.Threading
 open System.Windows.Forms
@@ -13,7 +14,7 @@ module Program =
     type TrayIconContext(_cancellationTokenSource: CancellationTokenSource) =
         inherit ApplicationContext()
 
-        let notifyIcon =
+        let _notifyIcon =
             let icon = new Icon("icon.ico")
 
             let icon =
@@ -53,10 +54,21 @@ module Program =
         timer.Interval <- interval.TotalMilliseconds |> int
         timer.Tick.Add(fun _ -> check ())
         timer.Start()
+        
+    let stopOtherInstances () =
+        let currentProcess = Process.GetCurrentProcess()
+        let currentProcessId = currentProcess.Id
+        let currentProcessName = currentProcess.ProcessName
+
+        let concurrentProcesses = Process.GetProcessesByName(currentProcessName) |> Array.filter (fun p -> p.Id <> currentProcessId)
+        for concurrentProcess in concurrentProcesses do
+            concurrentProcess.Kill()
 
     [<STAThread>]
     [<EntryPoint>]
     let main _ =
+        
+        stopOtherInstances ()
 
         check ()
         startTimer (TimeSpan.FromMinutes(1.0))
