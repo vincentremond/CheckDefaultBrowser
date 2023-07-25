@@ -15,7 +15,10 @@ module Log =
     let private openLog path =
         new StreamWriter(File.Open(path, FileMode.Append, FileAccess.Write, FileShare.Read))
 
-    let private logFile = lazy ("D:\DAT\logs\CheckDefaultBrowser.txt" |> openLog)
+    let private logFile =
+        lazy
+            ("D:\DAT\logs\CheckDefaultBrowser.txt"
+             |> openLog)
 
     let write message =
         logFile.Value.WriteLine($"|{DateTimeOffset.UtcNow:O}| %s{message}")
@@ -43,7 +46,11 @@ module Program =
                 | "openSettings" ->
                     task {
                         let uri = Uri(@"ms-settings:defaultapps")
-                        let! resultStatus = Windows.System.Launcher.LaunchUriAsync(uri).AsTask()
+
+                        let! resultStatus =
+                            Windows.System.Launcher
+                                .LaunchUriAsync(uri)
+                                .AsTask()
 
                         Log.write $"Launched settings: %b{resultStatus}"
                     }
@@ -53,8 +60,6 @@ module Program =
             )
 
             icon
-
-
 
     let showPopup message =
 
@@ -83,7 +88,10 @@ module Program =
 
                     let actualProgramId = subKey.GetValue("ProgId") :?> string
 
-                    if actualProgramId <> expectedProgramId then
+                    if
+                        actualProgramId
+                        <> expectedProgramId
+                    then
                         Log.write $"Protocol {protocol} is not set to {expectedProgramId} but to {actualProgramId}"
 
                         Some {|
@@ -101,13 +109,16 @@ module Program =
                 showPopup $"Protocol {r.Protocol} is not set to {r.ExpectedProgramId} but to {r.ActualProgramId}"
             | None -> ()
 
-
         with ex ->
             Log.write $"Error: %s{string ex}"
 
     let startTimer (interval: TimeSpan) =
         let timer = new Timer()
-        timer.Interval <- interval.TotalMilliseconds |> int
+
+        timer.Interval <-
+            interval.TotalMilliseconds
+            |> int
+
         timer.Tick.Add(fun _ -> check ())
         timer.Start()
 
