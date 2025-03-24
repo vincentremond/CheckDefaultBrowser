@@ -2,6 +2,6 @@ STORAGE: NONE
 RESTRICTION: == net9.0-windows10.0.19041.0
 NUGET
   remote: https://api.nuget.org/v3/index.json
-    FSharp.Core (9.0.100)
+    FSharp.Core (9.0.201)
     Microsoft.Toolkit.Uwp.Notifications (7.1.3)
-    System.Management (9.0)
+    System.Management (9.0.3)
